@@ -1,26 +1,26 @@
 # fiware2influxdb
 
-fiware2influxdb is a dump simple application writen in Python that periodically polls entity contents from an Orion context-broker (FIWARE) via NGSIv2. Once the information retrieved from the context-broker, it is writen into an InfluxDB database for later use. This application was developed as an alternative to the standard [FIWARE Cygnus](https://fiware-cygnus.readthedocs.io/en/latest/) add-on, usually requiring to cover a really complex installation and setup process.
+fiware2influxdb is a dump simple application written in Python that periodically polls entity contents from an Orion context-broker (FIWARE) via NGSIv2. Once the information retrieved from the context-broker, it is then written into an InfluxDB database for later use. This application was developed as an alternative to the standard [FIWARE Cygnus](https://fiware-cygnus.readthedocs.io/en/latest/) add-on, which usually requires a really complex installation and setup process.
 
 # Installation
 
-First of all, InfluxDB needs to be installed in your system. Please follow the [instructions](https://docs.influxdata.com/influxdb/v1.7/introduction/installation/) provided by the developer given your version of InfluxDB and OS.
+First of all, InfluxDB needs to be installed in your system. Please follow the [instructions](https://docs.influxdata.com/influxdb/v1.7/introduction/installation/) provided by the developer given the latest version of InfluxDB and your OS.
 
-Install [influxdb-python](https://github.com/influxdata/influxdb-python) with pip:
+Then install [influxdb-python](https://github.com/influxdata/influxdb-python) with pip:
 
 ```
 $ python3 -m pip install influxdb
 ```
 
-Then clone this repository and run fiware2influxdb with this command:
+And finally clone this repository and run fiware2influxdb with this command:
 
 ```
 $ python3 fiware2influxdb
 ```
 
-# Configurtion
+# Configuration
 
-Polling rate, location of the FIWARE server and query strings can be edited in the config file. Simply edit config/config.py and change any of the available configuration variables accordingly:
+Polling rate, location of the FIWARE server and query strings can be edited in the config file. Simply edit config/config.py and change any of the available configuration variables according to your needs:
 
 ```python
 ```
