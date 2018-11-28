@@ -85,7 +85,12 @@ class NlManager(object):
                 json_data["timestamp"] = sensor["TimeInstant"]["value"]
                 for key, value in sensor.items():
                     if key not in ["id", "type", "TimeInstant"]:
-                        json_data["endpoints"][key] = value["value"]
+                        val = value["value"]
+                        try:
+                            val = float(value["value"])
+                        except ValueError:
+                            pass
+                        json_data["endpoints"][key] = val
                 print(json_data)
 
                 self.db_client.save_network_activity(json_data)
