@@ -102,6 +102,8 @@ class NlManager(object):
             NlException("Retrieving entities. No response from server").log()
         except threading.ThreadError:
             NlException("Unable to scheldule entity update").log()
+        except NlException as ex:
+            ex.log()
         except:
             NlException("Unable to parse entities").log()
 
