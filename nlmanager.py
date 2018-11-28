@@ -57,11 +57,11 @@ class NlManager(object):
 
             return response.headers["X-Subject-Token"]
         except requests.RequestException:
-            NlException("Retrieving auth token. No response from server").show()
+            NlException("Retrieving auth token. No response from server").log()
         except threading.ThreadError:
-            NlException("Unable to scheldule token update").show()
+            NlException("Unable to scheldule token update").log()
         except:
-            NlException("Unable to parse token").show()
+            NlException("Unable to parse token").log()
 
 
     def get_entities(self):
@@ -99,11 +99,11 @@ class NlManager(object):
 
             threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
         except requests.RequestException:
-            NlException("Retrieving entities. No response from server").show()
+            NlException("Retrieving entities. No response from server").log()
         except threading.ThreadError:
-            NlException("Unable to scheldule entity update").show()
+            NlException("Unable to scheldule entity update").log()
         except:
-            NlException("Unable to parse entities").show()
+            NlException("Unable to parse entities").log()
 
 
     def __init__(self):
