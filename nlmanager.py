@@ -62,6 +62,8 @@ class NlManager(object):
             NlException("Unable to scheldule token update").log()
         except:
             NlException("Unable to parse token").log()
+        finally:
+            threading.Timer(50*60, self.get_entities).start()
 
 
     def get_entities(self):
@@ -96,8 +98,6 @@ class NlManager(object):
                 print(json_data)
 
                 self.db_client.save_network_activity(json_data)
-
-            threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
         except requests.RequestException:
             NlException("Retrieving entities. No response from server").log()
         except threading.ThreadError:
@@ -106,6 +106,8 @@ class NlManager(object):
             ex.log()
         except:
             NlException("Unable to parse entities").log()
+        finally:
+            threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
 
 
     def __init__(self):
