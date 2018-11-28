@@ -57,9 +57,11 @@ class NlManager(object):
 
             return response.headers["X-Subject-Token"]
         except requests.RequestException:
-            raise NlException("Retrieving auth token. No response from server")
+            NlException("Retrieving auth token. No response from server").show()
         except threading.ThreadError:
-            raise NlException("Unable to scheldule token update")
+            NlException("Unable to scheldule token update").show()
+        except:
+            NlException("Unable to parse token").show()
 
 
     def get_entities(self):
@@ -95,12 +97,13 @@ class NlManager(object):
 
                 self.db_client.save_network_activity(json_data)
 
-
             threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
         except requests.RequestException:
-            raise NlException("Retrieving entities. No response from server")
+            NlException("Retrieving entities. No response from server").show()
         except threading.ThreadError:
-            raise NlException("Unable to scheldule entity update")
+            NlException("Unable to scheldule entity update").show()
+        except:
+            NlException("Unable to parse entities").show()
 
 
     def __init__(self):
