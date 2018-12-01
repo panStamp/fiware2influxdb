@@ -39,6 +39,8 @@ class NlManager(object):
         """
         Retrieve auth token from server
         """
+        threading.Timer(NlConfig.TOKEN_INTERVAL, self.get_auth_token).start()
+
         url = NlConfig.AUTH_TOKEN_URL + "/v3/auth/tokens"
 
         payload = "{\"auth\": {\"identity\": {\"methods\": [\"password\"],\"password\": {\"user\": {\"domain\": {\"name\": \""
@@ -63,14 +65,14 @@ class NlManager(object):
             NlException("Unable to scheldule token update").log()
         except:
             NlException("Unable to parse token").log()
-        finally:
-            threading.Timer(NlConfig.TOKEN_INTERVAL, self.get_auth_token).start()
 
 
     def get_entities(self):
         """
         Retrieve list of entities from Context-broker
         """
+        threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
+        
         url = NlConfig.NGSIv2_URL + "/v2/entities"
 
         headers = {
@@ -107,8 +109,6 @@ class NlManager(object):
             ex.log()
         except:
             NlException("Unable to parse entities").log()
-        finally:
-            threading.Timer(NlConfig.POLLING_INTERVAL, self.get_entities).start()
 
 
     def __init__(self):
