@@ -53,9 +53,10 @@ class NlManager(object):
         try:
             response = requests.request("POST", url, data=payload, headers=headers, verify=False)
 
-            threading.Timer(50*60, self.get_entities).start()
-
-            return response.headers["X-Subject-Token"]
+            if "X-Subject-Token" in response.headers:
+                self.auth_token = response.headers["X-Subject-Token"]
+            else:
+                NlException("X-Subject-Token not available in response from server").log()
         except requests.RequestException:
             NlException("Retrieving auth token. No response from server").log()
         except threading.ThreadError:
@@ -63,7 +64,7 @@ class NlManager(object):
         except:
             NlException("Unable to parse token").log()
         finally:
-            threading.Timer(50*60, self.get_entities).start()
+            threading.Timer(NlConfig.TOKEN_INTERVAL, self.get_auth_token).start()
 
 
     def get_entities(self):
@@ -114,7 +115,12 @@ class NlManager(object):
         """
         Class constructor
         """
+        ## Auth token
+        self.auth_token = None
+
         ## InfluxDB client        
         self.db_client = NlDbClient()
-        self.auth_token = self.get_auth_token()
+
+        ## HTTP requests
+        self.get_auth_token()
         self.get_entities()

@@ -47,8 +47,11 @@ class NlConfig(object):
     ## User password
     SUBSERVICE = "/Taller"
 
-    ## Polling interval from Context-broker (in sec)
+    ## NGSv2 polling interval from Context-broker (in sec)
     POLLING_INTERVAL = 10
+
+    ## Auth token polling interval from Context-broker (in sec)
+    TOKEN_INTERVAL = 45 * 60
 
     ## Database name
     DATABASE_NAME = "fiware"
